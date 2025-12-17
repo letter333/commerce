@@ -11,11 +11,11 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.Period;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.Date;
-import java.util.List;
 
 @Entity
 @Table(name = "users")
@@ -35,19 +35,16 @@ public class User extends BaseEntity implements UserDetails {
     private String nickname;
 
     @Column(nullable = false, length = 10)
-    private String Tag;
+    private String tag;
 
     @Column(nullable = false, unique = true, length = 50)
     private String email;
 
-    @Column(nullable = false, length = 11)
+    @Column(nullable = false, length = 13)
     private String phone;
 
-    @Column
-    private int age;
-
     @Column(length = 8)
-    private Date birthdate;
+    private LocalDate birthdate;
 
     @Column
     private String gender;
@@ -68,13 +65,12 @@ public class User extends BaseEntity implements UserDetails {
     private LocalDateTime deletedAt;
 
     @Builder
-    public User(String name, String nickname, String Tag, String email, String phone, int age, Date birthdate, String gender, String password, UserRole role) {
+    public User(String name, String nickname, String tag, String email, String phone, LocalDate birthdate, String gender, String password, UserRole role) {
         this.name = name;
         this.nickname = nickname;
-        this.Tag = Tag;
+        this.tag = tag;
         this.email = email;
         this.phone = phone;
-        this.age = age;
         this.birthdate = birthdate;
         this.gender = gender;
         this.password = password;
@@ -88,7 +84,7 @@ public class User extends BaseEntity implements UserDetails {
 
     @Override
     public String getUsername() {
-        return name;
+        return email;
     }
 
     @Override
@@ -113,6 +109,14 @@ public class User extends BaseEntity implements UserDetails {
 
     public void deactivate() {
         this.active = false;
+    }
+
+    public int getAge() {
+        if(birthdate == null) {
+            return 0;
+        }
+
+        return Period.between(birthdate, LocalDate.now()).getYears();
     }
 }
 
