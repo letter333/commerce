@@ -1,5 +1,6 @@
 package org.letter33.commerce.domain.user.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
@@ -43,7 +44,8 @@ public class User extends BaseEntity implements UserDetails {
     @Column(nullable = false, length = 13)
     private String phone;
 
-    @Column(length = 8)
+    @Column(length = 10)
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate birthdate;
 
     @Column

@@ -10,6 +10,8 @@ import org.letter33.commerce.domain.user.entity.User;
 import org.letter33.commerce.domain.user.entity.UserRole;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import java.time.LocalDate;
+
 public class UserRequest {
     @Getter
     @NoArgsConstructor
@@ -34,6 +36,8 @@ public class UserRequest {
         @Pattern(regexp = "^\\d{3}-\\d{4}-\\d{4}$", message = "올바른 전화번호 형식이 아닙니다.")
         private String phone;
 
+        private LocalDate birthdate;
+
         private String gender;
 
         @NotBlank(message = "비밀번호는 필수입니다.")
@@ -49,6 +53,7 @@ public class UserRequest {
                     .tag(tag)
                     .email(email)
                     .phone(phone)
+                    .birthdate(birthdate)
                     .gender(gender)
                     .password(passwordEncoder.encode(password))
                     .role(UserRole.USER)
