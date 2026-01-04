@@ -35,15 +35,3 @@ out/
 
 ### VS Code ###
 .vscode/
-
-application-local.yml
-application-prod.yml
-application-*.yml
-!application.yml
-
-### Environment Variables ###
-.env
-.env.local
-.env.development.local
-.env.test.local
-.env.production.local
